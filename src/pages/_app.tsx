@@ -7,7 +7,7 @@ import type { AppProps } from 'next/app';
 // eslint-disable-next-line arrow-body-style
 const MyApp = ({ Component, pageProps: { session, ...pageProps } }: AppProps) => {
   return (
-    <SessionProvider session={pageProps.session} refetchInterval={5 * 60}>
+    <SessionProvider session={session} refetchInterval={5 * 60}>
       <Component {...pageProps} />
     </SessionProvider>
   );

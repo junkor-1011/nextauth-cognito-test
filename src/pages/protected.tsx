@@ -13,7 +13,7 @@ const Home: React.VFC = () => {
     return (
       <>
         {/* Signed in as {session?.user?.name || JSON.stringify(session?.user)} (email: {session?.user?.email}) <br/> */}
-        Signed in as {session?.user?.email} <br />
+        Signed in as {session['cognito:username']} <br />
         {/* eslint-disable-next-line react/button-has-type */}
         <button onClick={() => signOut()}>Sign Out</button>
         <br />
