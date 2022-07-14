@@ -25,7 +25,7 @@ const Home: React.VFC = () => {
     <>
       Not signed in <br />
       {/* eslint-disable-next-line react/button-has-type */}
-      <button onClick={() => signIn()}>Sign in</button>
+      <button onClick={() => signIn('cognito')}>Sign in</button>
     </>
   );
 };
