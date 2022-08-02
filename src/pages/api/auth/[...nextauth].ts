@@ -43,13 +43,13 @@ export default NextAuth({
         tokenNew.idToken = account?.id_token;
         tokenNew.accessToken = account?.access_token;
         tokenNew.refreshToken = account?.refresh_token;
-        tokenNew.customKey1 = account?.customKey1 || '';
-        tokenNew.customKey2 = account?.customKey2 || '';
-        tokenNew.customKey3 = account?.customKey3 || '';
       }
       if (profile) {
         tokenNew['cognito:username'] = profile['cognito:username'];
         tokenNew['cognito:groups'] = profile['cognito:groups'] || [];
+        tokenNew.customKey1 = profile?.customKey1 || '';
+        tokenNew.customKey2 = profile?.customKey2 || '';
+        tokenNew.customKey3 = profile?.customKey3 || '';
       }
 
       return tokenNew;
