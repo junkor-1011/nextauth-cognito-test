@@ -2,7 +2,7 @@ import { useSession, signIn, signOut } from 'next-auth/react';
 
 import type React from 'react';
 
-const Home: React.VFC = () => {
+const Home: React.FC = () => {
   const { data: session, status } = useSession();
 
   if (status === 'loading') {
