@@ -24,6 +24,10 @@ export default NextAuth({
       sessionNew.accessToken = token?.accessToken;
       sessionNew.refreshToken = token?.refreshToken;
       sessionNew['cognito:username'] = token['cognito:username'];
+      sessionNew['cognito:groups'] = token['cognito:groups'];
+      sessionNew.customKey1 = token.customKey1;
+      sessionNew.customKey2 = token.customKey2;
+      sessionNew.customKey3 = token.customKey3;
       return sessionNew;
     },
     // eslint-disable-next-line no-unused-vars
@@ -42,6 +46,10 @@ export default NextAuth({
       }
       if (profile) {
         tokenNew['cognito:username'] = profile['cognito:username'];
+        tokenNew['cognito:groups'] = profile['cognito:groups'] || [];
+        tokenNew.customKey1 = profile?.customKey1 || '';
+        tokenNew.customKey2 = profile?.customKey2 || '';
+        tokenNew.customKey3 = profile?.customKey3 || '';
       }
 
       return tokenNew;
