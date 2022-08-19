@@ -1,0 +1,13 @@
+version: '3'
+
+services:
+  app:
+    container_name: app
+    image: '${NEXT_APP_IMAGE:-nextauth_cognito_app}'
+    build:
+      context: .
+      dockerfile: '${DOCKERFILE:-Dockerfile}'
+    ports:
+      - '${PORT:-3000}:3000'
+    volumes:
+      - '${LOCAL_ENV_FILE_PATH:-./.env.local}:/app/.env.local'
