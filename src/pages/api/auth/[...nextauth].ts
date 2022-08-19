@@ -1,5 +1,6 @@
-// eslint-disable no-console
-// eslint-disable no-param-reassign
+/* eslint-disable no-console */
+/* eslint-disable no-param-reassign */
+/* eslint-disable @typescript-eslint/require-await */
 
 import NextAuth from 'next-auth';
 import CognitoProvider from 'next-auth/providers/cognito';

@@ -16,18 +16,18 @@ module.exports = {
     config.module.rules.push({
       test: /\.scss$/,
       use: [
-        "style-loader",
+        'style-loader',
         {
-          loader: "css-loader",
+          loader: 'css-loader',
           options: {
             modules: {
               auto: true,
             },
           },
         },
-        "sass-loader",
+        'sass-loader',
       ],
-      include: path.resolve(__dirname, "../"),
+      include: path.resolve(__dirname, '../'),
     });
 
     return config;

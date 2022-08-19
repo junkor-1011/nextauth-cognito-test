@@ -1,3 +1,5 @@
+/* eslint-disable react/button-has-type */
+/* eslint-disable @typescript-eslint/no-misused-promises */
 import { useSession, signIn, signOut } from 'next-auth/react';
 
 import type React from 'react';
@@ -52,7 +54,6 @@ const Home: React.FC = () => {
       <>
         {/* Signed in as {session?.user?.name || JSON.stringify(session?.user)} (email: {session?.user?.email}) <br/> */}
         Signed in as {session['cognito:username']} <br />
-        {/* eslint-disable-next-line react/button-has-type */}
         <button onClick={() => signOut()}>Sign Out</button>
         <br />
         <Groups groups={groups} />
@@ -66,7 +67,6 @@ const Home: React.FC = () => {
   return (
     <>
       Not signed in <br />
-      {/* eslint-disable-next-line react/button-has-type */}
       <button onClick={() => signIn('cognito')}>Sign in</button>
     </>
   );

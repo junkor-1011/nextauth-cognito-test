@@ -6,7 +6,11 @@ module.exports = {
     jest: true,
   },
   extends: [
+    'eslint:recommended',
     'airbnb',
+    'airbnb-typescript',
+    'plugin:@typescript-eslint/recommended',
+    'plugin:@typescript-eslint/recommended-requiring-type-checking',
     'next',
     'plugin:@next/next/recommended',
     'next/core-web-vitals',
@@ -20,6 +24,7 @@ module.exports = {
     },
     ecmaVersion: 'latest',
     sourceType: 'module',
+    project: 'tsconfig.json',
   },
   plugins: ['react', '@typescript-eslint', 'jest', 'testing-library'],
   rules: {
@@ -27,7 +32,12 @@ module.exports = {
     'react/jsx-filename-extension': [
       2,
       {
-        extensions: ['.js', '.jsx', '.ts', 'tsx'],
+        extensions: [
+          // '.js',
+          // '.jsx',
+          '.ts',
+          'tsx',
+        ],
       },
     ],
     'react/require-default-props': 'off',
@@ -35,8 +45,8 @@ module.exports = {
     'import/extensions': [
       2,
       {
-        js: 'never',
-        jsx: 'never',
+        // js: 'never',
+        // jsx: 'never',
         ts: 'never',
         tsx: 'never',
         json: 'always',
@@ -48,17 +58,22 @@ module.exports = {
       files: [
         '**/*.test.ts',
         '**/*.test.tsx',
-        '**/*.test.js',
-        '**/*.test.jsx',
+        // '**/*.test.js',
+        // '**/*.test.jsx',
         '**/__tests__/**/*.ts',
         '**/__tests__/**/*.tsx',
-        '**/__tests__/**/*.js',
-        '**/__tests__/**/*.jsx',
+        // '**/__tests__/**/*.js',
+        // '**/__tests__/**/*.jsx',
       ],
-      extends: ['plugin:jest/recommended', 'plugin:testing-library/react'],
+      extends: ['plugin:jest/recommended', 'plugin:jest/style', 'plugin:testing-library/react'],
     },
     {
-      files: ['**/*.stories.ts', '**/*.stories.tsx', '**/*.stories.js', '**/*.stories.jsx'],
+      files: [
+        '**/*.stories.ts',
+        '**/*.stories.tsx',
+        // '**/*.stories.js',
+        // '**/*.stories.jsx'
+      ],
       rules: {
         'import/no-extraneous-dependencies': 'off',
       },
