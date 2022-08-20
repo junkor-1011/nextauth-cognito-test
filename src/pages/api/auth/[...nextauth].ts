@@ -1,5 +1,4 @@
 /* eslint-disable @typescript-eslint/naming-convention */
-/* eslint-disable no-console */
 /* eslint-disable no-param-reassign */
 /* eslint-disable @typescript-eslint/require-await */
 
@@ -118,7 +117,7 @@ export default NextAuth({
         customKey3,
       };
 
-      console.log('[INFO]signin: ', tokenNew.cognitoUsername);
+      logger.info('sign in: ', tokenNew.cognitoUsername);
 
       return tokenNew;
     },
