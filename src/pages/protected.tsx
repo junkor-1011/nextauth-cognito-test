@@ -46,14 +46,14 @@ const Home: React.FC = () => {
   }
 
   if (session) {
-    const groups = session['cognito:groups'] as string[]; // TMP, TODO: modify types
+    const groups = session.cognitoGroups as string[]; // TMP, TODO: modify types
     const value1: string = (session?.customKey1 as string) || ''; // TMP, TODO: modify types
     const value2: string = (session?.customKey2 as string) || ''; // TMP, TODO: modify types
     const value3: string = (session?.customKey3 as string) || ''; // TMP, TODO: modify types
     return (
       <>
         {/* Signed in as {session?.user?.name || JSON.stringify(session?.user)} (email: {session?.user?.email}) <br/> */}
-        Signed in as {session['cognito:username']} <br />
+        Signed in as {session.cognitoUsername as string} <br />
         <button onClick={() => signOut()}>Sign Out</button>
         <br />
         <Groups groups={groups} />

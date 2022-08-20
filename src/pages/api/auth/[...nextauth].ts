@@ -1,9 +1,12 @@
+/* eslint-disable @typescript-eslint/naming-convention */
 /* eslint-disable no-console */
 /* eslint-disable no-param-reassign */
 /* eslint-disable @typescript-eslint/require-await */
 
 import NextAuth from 'next-auth';
 import CognitoProvider from 'next-auth/providers/cognito';
+
+import type { CustomJwtToken, CustomSession } from '@/types/nextauth-extends';
 
 export default NextAuth({
   providers: [
@@ -14,24 +17,37 @@ export default NextAuth({
     }),
   ],
   callbacks: {
-    // eslint-disable-next-line no-unused-vars
-    async session({ session, user, token }) {
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
+    async session({ session, user, token }): Promise<CustomSession> {
       // console.log('session')
       // console.log('session', 'session', session);
       // console.log('session', 'user', user);
       // console.log('session', 'token', token);
-      const sessionNew = { ...session };
-      sessionNew.idToken = token?.idToken;
-      sessionNew.accessToken = token?.accessToken;
-      sessionNew.refreshToken = token?.refreshToken;
-      sessionNew['cognito:username'] = token['cognito:username'];
-      sessionNew['cognito:groups'] = token['cognito:groups'];
-      sessionNew.customKey1 = token.customKey1;
-      sessionNew.customKey2 = token.customKey2;
-      sessionNew.customKey3 = token.customKey3;
+      const tokenObj = token as CustomJwtToken; // TODO: add user define type-guard
+      const {
+        idToken,
+        accessToken,
+        refreshToken,
+        cognitoUsername,
+        cognitoGroups,
+        customKey1,
+        customKey2,
+        customKey3,
+      } = tokenObj;
+      const sessionNew: CustomSession = {
+        ...session,
+        idToken,
+        accessToken,
+        refreshToken,
+        cognitoUsername,
+        cognitoGroups,
+        customKey1,
+        customKey2,
+        customKey3,
+      };
       return sessionNew;
     },
-    // eslint-disable-next-line no-unused-vars
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     async jwt({ token, user, account, profile, isNewUser }) {
       // console.log('jwt callback');
       // console.log('token', token)
@@ -39,19 +55,55 @@ export default NextAuth({
       // console.log('account', account)
       // console.log('profile', profile)
       // console.log('isNewUser', isNewUser)
-      const tokenNew = { ...token };
-      if (account) {
-        tokenNew.idToken = account?.id_token;
-        tokenNew.accessToken = account?.access_token;
-        tokenNew.refreshToken = account?.refresh_token;
+
+      // TODO: add user define type-guard for account & profile
+      if (!account) {
+        console.log('no account in jwt');
+        return token;
       }
-      if (profile) {
-        tokenNew['cognito:username'] = profile['cognito:username'];
-        tokenNew['cognito:groups'] = profile['cognito:groups'] || [];
-        tokenNew.customKey1 = profile?.customKey1 || '';
-        tokenNew.customKey2 = profile?.customKey2 || '';
-        tokenNew.customKey3 = profile?.customKey3 || '';
+      const { id_token: idToken, access_token: accessToken, refresh_token: refreshToken } = account;
+      if (!idToken || !accessToken || !refreshToken) {
+        console.log(
+          'lack of oidc token(s): idToken, accessToken, refreshToken: ',
+          idToken,
+          accessToken,
+          refreshToken,
+        );
+        return token;
       }
+
+      if (!profile) {
+        console.log('no profile in jwt');
+        return token;
+      }
+
+      const cognitoUsername = profile['cognito:username'];
+      if (typeof cognitoUsername !== 'string') {
+        console.log('no cognito:username in profile');
+        return token;
+      }
+
+      // NOTE: cognito:groups -> string[] or undefined because of cognito's specification.
+      const cognitoGroups = (profile['cognito:groups'] || []) as string[];
+
+      // NOTE: custom claim is string or undefined
+      const customKey1 = (profile?.customKey1 || '') as string;
+      const customKey2 = (profile?.customKey1 || '') as string;
+      const customKey3 = (profile?.customKey1 || '') as string;
+
+      const tokenNew: CustomJwtToken = {
+        ...token,
+        idToken,
+        accessToken,
+        refreshToken,
+        cognitoUsername,
+        cognitoGroups,
+        customKey1,
+        customKey2,
+        customKey3,
+      };
+
+      console.log('[INFO]signin: ', tokenNew.cognitoUsername);
 
       return tokenNew;
     },
