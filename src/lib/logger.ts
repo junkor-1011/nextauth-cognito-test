@@ -13,27 +13,32 @@ export default class Logger {
 
   logLevelNumber: LogLevelNumber;
 
-  constructor(logLevelLower: LogLevelLower = 'Info') {
-    this.logLevelLower = logLevelLower;
+  constructor(logLevelLower?: string) {
+    // this.logLevelLower = logLevelLower;
     switch (logLevelLower) {
       case 'Debug': {
+        this.logLevelLower = logLevelLower;
         this.logLevelNumber = 0;
         break;
       }
       case 'Info': {
+        this.logLevelLower = logLevelLower;
         this.logLevelNumber = 1;
         break;
       }
       case 'Warning': {
+        this.logLevelLower = logLevelLower;
         this.logLevelNumber = 2;
         break;
       }
       case 'Error': {
+        this.logLevelLower = logLevelLower;
         this.logLevelNumber = 3;
         break;
       }
       default: {
-        this.logLevelNumber = 0;
+        this.logLevelLower = 'Info';
+        this.logLevelNumber = 1;
       }
     }
   }
