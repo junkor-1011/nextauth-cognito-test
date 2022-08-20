@@ -103,8 +103,8 @@ export default NextAuth({
 
       // NOTE: custom claim is string or undefined
       const customKey1 = (profile?.customKey1 || '') as string;
-      const customKey2 = (profile?.customKey1 || '') as string;
-      const customKey3 = (profile?.customKey1 || '') as string;
+      const customKey2 = (profile?.customKey2 || '') as string;
+      const customKey3 = (profile?.customKey3 || '') as string;
 
       const tokenNew: CustomJwtToken = {
         ...token,
