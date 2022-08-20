@@ -6,9 +6,24 @@
 import NextAuth from 'next-auth';
 import CognitoProvider from 'next-auth/providers/cognito';
 
+import Logger from '@/lib/logger';
+
 import type { CustomJwtToken, CustomSession } from '@/types/nextauth-extends';
 
+const logger = new Logger('Debug');
+
 export default NextAuth({
+  logger: {
+    error(code, metadata) {
+      logger.error(code, metadata);
+    },
+    warn(code) {
+      logger.warn(code);
+    },
+    debug(code, metadata) {
+      logger.debug(code, metadata);
+    },
+  },
   providers: [
     CognitoProvider({
       clientId: process.env.COGNITO_CLIENT_ID || '',
@@ -58,7 +73,7 @@ export default NextAuth({
 
       // TODO: add user define type-guard for account & profile
       if (!account) {
-        console.log('no account in jwt');
+        // console.log('no account in jwt');
         return token;
       }
       const { id_token: idToken, access_token: accessToken, refresh_token: refreshToken } = account;
@@ -73,13 +88,13 @@ export default NextAuth({
       }
 
       if (!profile) {
-        console.log('no profile in jwt');
+        // console.log('no profile in jwt');
         return token;
       }
 
       const cognitoUsername = profile['cognito:username'];
       if (typeof cognitoUsername !== 'string') {
-        console.log('no cognito:username in profile');
+        // console.log('no cognito:username in profile');
         return token;
       }
 
