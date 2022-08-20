@@ -6,4 +6,6 @@ module.exports = {
     },
   },
   testEnvironment: 'jsdom',
+  testMatch: ['**/__tests__/**/*.ts?(x)', '**/?(*.)+(test|spec).ts?(x)'],
+  roots: ['src'],
 };
