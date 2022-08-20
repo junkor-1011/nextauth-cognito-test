@@ -9,7 +9,7 @@ import Logger from '@/lib/logger';
 
 import type { CustomJwtToken, CustomSession } from '@/types/nextauth-extends';
 
-const logger = new Logger('Debug');
+const logger = new Logger(process.env.LOG_LEVEL);
 
 export default NextAuth({
   logger: {
