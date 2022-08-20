@@ -44,18 +44,18 @@ export default class Logger {
 
   // eslint-disable-next-line class-methods-use-this
   error(message: any, ...optionalParams: any[]) {
-    if (this.logLevelNumber <= 3) console.error(message, optionalParams);
+    if (this.logLevelNumber <= 3) console.error('[ERROR]', message, optionalParams);
   }
 
   warn(message: any, ...optionalParams: any[]) {
-    if (this.logLevelNumber <= 2) console.warn(message, optionalParams);
+    if (this.logLevelNumber <= 2) console.warn('[WARNING]', message, optionalParams);
   }
 
   info(message: any, ...optionalParams: any[]) {
-    if (this.logLevelNumber <= 1) console.info(message, optionalParams);
+    if (this.logLevelNumber <= 1) console.info('[INFO]', message, optionalParams);
   }
 
   debug(message: any, ...optionalParams: any[]) {
-    if (this.logLevelNumber <= 0) console.debug(message, optionalParams);
+    if (this.logLevelNumber <= 0) console.debug('[DEBUG]', message, optionalParams);
   }
 }
