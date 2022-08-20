@@ -3,8 +3,8 @@ import type { Session } from 'next-auth';
 
 export type OIDCToken = JWT & {
   readonly idToken: string;
-  readonly accessToken: string;
-  readonly refreshToken: string;
+  readonly accessToken?: string;
+  readonly refreshToken?: string;
 };
 
 export type CustomJwtToken = OIDCToken & {
@@ -17,8 +17,8 @@ export type CustomJwtToken = OIDCToken & {
 
 export type CustomSession = Session & {
   readonly idToken: string;
-  readonly accessToken: string;
-  readonly refreshToken: string;
+  readonly accessToken?: string;
+  readonly refreshToken?: string;
   readonly cognitoUsername: string; // cognito:username
   readonly cognitoGroups: string[]; // cognito:groups
   readonly customKey1: string;

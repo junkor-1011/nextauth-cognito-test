@@ -41,8 +41,8 @@ export default NextAuth({
       const tokenObj = token as CustomJwtToken; // TODO: add user define type-guard
       const {
         idToken,
-        accessToken,
-        refreshToken,
+        // accessToken,
+        // refreshToken,
         cognitoUsername,
         cognitoGroups,
         customKey1,
@@ -52,8 +52,8 @@ export default NextAuth({
       const sessionNew: CustomSession = {
         ...session,
         idToken,
-        accessToken,
-        refreshToken,
+        // accessToken,
+        // refreshToken,
         cognitoUsername,
         cognitoGroups,
         customKey1,
@@ -109,8 +109,8 @@ export default NextAuth({
       const tokenNew: CustomJwtToken = {
         ...token,
         idToken,
-        accessToken,
-        refreshToken,
+        // accessToken,
+        // refreshToken,
         cognitoUsername,
         cognitoGroups,
         customKey1,
