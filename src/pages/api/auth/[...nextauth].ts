@@ -77,7 +77,7 @@ export default NextAuth({
       }
       const { id_token: idToken, access_token: accessToken, refresh_token: refreshToken } = account;
       if (!idToken || !accessToken || !refreshToken) {
-        console.log(
+        logger.debug(
           'lack of oidc token(s): idToken, accessToken, refreshToken: ',
           idToken,
           accessToken,
