@@ -14,12 +14,7 @@ export default {
 
 const Template: ComponentStory<typeof Header> = (args) => <Header {...args} />;
 
-export const Sample1 = Template.bind({
-  args: {
-    username: 'username',
-    signOutCallback: () => {},
-  },
-});
+export const Sample1 = Template.bind({});
 Sample1.args = {
   username: 'username',
   signOutCallback: () => {},

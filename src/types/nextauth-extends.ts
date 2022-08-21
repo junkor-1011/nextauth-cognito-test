@@ -27,4 +27,7 @@ export type CustomSession = Session & {
   readonly customKey1: string;
   readonly customKey2: string;
   readonly customKey3: string;
+  readonly iat: number;
+  readonly exp: number;
+  readonly expires: string;
 };
