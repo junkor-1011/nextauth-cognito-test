@@ -21,6 +21,9 @@ export const isValidCustomSession = (x: unknown): x is CustomSession => {
   if (typeof x.customKey2 !== 'string') return false;
   if (typeof x.customKey3 !== 'string') return false;
 
+  if (typeof x.iat !== 'number') return false;
+  if (typeof x.exp !== 'number') return false;
+
   // original nextauth's property
   if (typeof x.expires !== 'string') return false;
 

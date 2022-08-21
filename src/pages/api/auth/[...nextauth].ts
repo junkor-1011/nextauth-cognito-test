@@ -10,6 +10,7 @@ import { isValidCustomSession } from '@/lib/types/TypeValidation/nextauth-extent
 
 import type { Session } from 'next-auth';
 import type { CustomJwtToken, CustomSession } from '@/types/nextauth-extends';
+import { JWT } from 'next-auth/jwt';
 
 const logger = new Logger(process.env.LOG_LEVEL);
 
@@ -35,7 +36,6 @@ export default NextAuth({
   callbacks: {
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
     async session({ session, user, token }): Promise<Session> {
-      const tokenObj = token as CustomJwtToken; // TODO: add user define type-guard
       const {
         idToken,
         // accessToken,
@@ -45,8 +45,11 @@ export default NextAuth({
         customKey1,
         customKey2,
         customKey3,
-      } = tokenObj;
-      const sessionNew: CustomSession = {
+        iat,
+        exp,
+        expires,
+      } = token;
+      const sessionNew = {
         ...session,
         idToken,
         // accessToken,
@@ -56,6 +59,9 @@ export default NextAuth({
         customKey1,
         customKey2,
         customKey3,
+        iat,
+        exp,
+        expires,
       } as const;
       logger.debug('sessionNew: ', sessionNew);
       if (!isValidCustomSession(sessionNew)) {
@@ -92,6 +98,15 @@ export default NextAuth({
         return token;
       }
 
+      const { iat, exp } = profile;
+      if (typeof iat !== 'number') {
+        return token;
+      }
+      if (typeof exp !== 'number') {
+        return token;
+      }
+      const expires = new Date(exp * 1000).toISOString();
+
       // NOTE: cognito:groups -> string[] or undefined because of cognito's specification.
       const cognitoGroups = (profile['cognito:groups'] || []) as string[];
 
@@ -110,6 +125,9 @@ export default NextAuth({
         customKey1,
         customKey2,
         customKey3,
+        iat,
+        exp,
+        expires,
       };
 
       logger.info('sign in: ', tokenNew.cognitoUsername);
