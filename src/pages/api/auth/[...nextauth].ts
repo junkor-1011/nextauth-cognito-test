@@ -6,7 +6,9 @@ import NextAuth from 'next-auth';
 import CognitoProvider from 'next-auth/providers/cognito';
 
 import Logger from '@/lib/logger';
+import { isValidCustomSession } from '@/lib/types/TypeValidation/nextauth-extention';
 
+import type { Session } from 'next-auth';
 import type { CustomJwtToken, CustomSession } from '@/types/nextauth-extends';
 
 const logger = new Logger(process.env.LOG_LEVEL);
@@ -32,11 +34,7 @@ export default NextAuth({
   ],
   callbacks: {
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
-    async session({ session, user, token }): Promise<CustomSession> {
-      // console.log('session')
-      // console.log('session', 'session', session);
-      // console.log('session', 'user', user);
-      // console.log('session', 'token', token);
+    async session({ session, user, token }): Promise<Session> {
       const tokenObj = token as CustomJwtToken; // TODO: add user define type-guard
       const {
         idToken,
@@ -58,18 +56,15 @@ export default NextAuth({
         customKey1,
         customKey2,
         customKey3,
-      };
+      } as const;
+      logger.debug('sessionNew: ', sessionNew);
+      if (!isValidCustomSession(sessionNew)) {
+        return session; // TMP TODO: improve
+      }
       return sessionNew;
     },
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
     async jwt({ token, user, account, profile, isNewUser }) {
-      // console.log('jwt callback');
-      // console.log('token', token)
-      // console.log('user', user)
-      // console.log('account', account)
-      // console.log('profile', profile)
-      // console.log('isNewUser', isNewUser)
-
       // TODO: add user define type-guard for account & profile
       if (!account) {
         // console.log('no account in jwt');
