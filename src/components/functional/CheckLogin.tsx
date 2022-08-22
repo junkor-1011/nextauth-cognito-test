@@ -10,7 +10,7 @@ type CheckLoginProps = {
   children: React.ReactNode;
 };
 
-export const CheckLogin: React.FC<CheckLoginProps> = ({ children }) => {
+const CheckLogin: React.FC<CheckLoginProps> = ({ children }) => {
   const { data: session, status } = useSession();
   if (status === 'loading') {
     // or display 'Loading'
@@ -24,9 +24,10 @@ export const CheckLogin: React.FC<CheckLoginProps> = ({ children }) => {
   const current: number = new Date().getTime(); // current timestamp(msec)
 
   // check expiration
-  if (exp * 1000 > current) {
+  if (exp * 1000 < current) {
     return <CognitoSignIn authError="expired" />;
   }
 
   return <div>{children}</div>;
 };
+export default CheckLogin;
