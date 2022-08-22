@@ -9,8 +9,11 @@ import Logger from '@/lib/logger';
 import { isValidCustomSession } from '@/lib/types/TypeValidation/nextauth-extention';
 
 import type { Session } from 'next-auth';
-import type { CustomJwtToken, CustomSession } from '@/types/nextauth-extends';
-import { JWT } from 'next-auth/jwt';
+import type {
+  CustomJwtToken,
+  // CustomSession
+} from '@/types/nextauth-extends';
+// import { JWT } from 'next-auth/jwt';
 
 const logger = new Logger(process.env.LOG_LEVEL);
 
@@ -34,8 +37,11 @@ export default NextAuth({
     }),
   ],
   callbacks: {
-    // eslint-disable-next-line @typescript-eslint/no-unused-vars
-    async session({ session, user, token }): Promise<Session> {
+    async session({
+      session,
+      //  user,
+      token,
+    }): Promise<Session> {
       const {
         idToken,
         // accessToken,
